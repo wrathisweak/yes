@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroRide Pro - Ultimate Performance Bike</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Custom CSS with Animations */
+        :root {
+            --primary: #FF4D00;
+            --secondary: #2A2A2A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .nav-wrapper {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(42, 42, 42, 0.95);
+            z-index: 1000;
+            transition: 0.4s;
+        }
+
+        .scrolled {
+            background: rgba(0, 0, 0, 0.9) !important;
+            padding: 15px 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: url('bg.jpg') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 77, 0, 0.5);
+        }
+
+        .feature-section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            animation: slideIn 0.6s ease forwards;
+            animation-play-state: paused;
+        }
+
+    .feature-card.in-view {
+            animation-play-state: running;
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+/* Ordered list styling */
+.performance-list {
+    list-style: none;
+    counter-reset: performance-counter;
+    padding-left: 0;
+    margin: 2rem 0;
+}
+
+.performance-list li {
+    counter-increment: performance-counter;
+    margin-bottom: 2rem;
+    padding-left: 2.5rem;
+    position: relative;
+}
+
+.performance-list li::before {
+    content: counter(performance-counter) ".";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.2em;
+}
+
+.performance-list h3 {
+    margin-bottom: 0.8rem;
+}
+
+        .carbon-frame {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+            margin: 100px 0;
+        }
+
+        .carbon-frame img {
+            width: 100%;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        .carbon-frame img:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+
+      @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Specs Section */
+        .specs-section {
+            padding: 100px 20px;
+            background: #f9f9f9;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .spec-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 100px 20px;
+        }
+
+        .masonry-grid {
+            column-count: 3;
+            column-gap: 30px;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            transition: transform 0.4s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 20px;
+            background: var(--secondary);
+            color: white;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            background: rgba(255,255,255,0.2);
+            outline: none;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-wrapper">
+        <nav>
+            <h1 style="color: var(--primary);">AeroRide Pro</h1>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#specs">Specs</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </div>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Experience Cycling Perfection</h1>
+            <a href="order.html" class="cta-button">Pre-Order Now</a>
+        </div>
+    </section>
+
+<section id="features" class="feature-section">
+    <h1>Description Of Bike</h1>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <p>Power through the flats and laugh in the face of headwinds with this sprinter’s dream machine, specifically crafted to propel its rider to the front of the pack.</p>
+
+            <h2>Key Performance Factors</h2>
+            
+            <ol class="performance-list">
+                <li>
+                    <h3>Best Aero Road Bike</h3>
+                    <p>Cutting edge tube shaping and a geometry that adds comfort and power to an aerodynamic body position.</p>
+                </li>
+
+                <li>
+                    <h3>All-Speed Control</h3>
+                    <p>The lateral stiffness in the fork and disc brakes offer the corner-bombing, gap-shooting control you need on race day.</p>
+                </li>
+
+                <li>
+                    <h3>Uncompromised Stiffness</h3>
+                    <p>The high-speed efficiency is next to none for even the strongest of sprinters, with incredible power transfer and an aero build.</p>
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+    
+    <section id="specs" class="specs-section">
+        <div class="feature-section">
+            <h2>Technical Specifications</h2>
+            <div class="specs-grid">
+                <div class="spec-card">
+
+<h3>Frame</h3>
+
+<p>Advanced-Grade Composite, 12x142mm thru-axle, disc</p>
+
+<h3>Color</h3>
+
+<p>Milky Way</p>
+
+<h3>Fork</h3>
+
+<p>Advanced-Grade Composite, full-composite OverDrive 2 steerer, 12x100mm, disc</p>
+
+
+<h3>Handlebar</h3>
+
+<p>Liv Contact SLR Aero, 31.8mm XXS:36cm, XS:36cm, S:38cm, M:40cm, L:42cm</p>
+
+
+<h3>Grips</h3>
+
+<p>Liv All Condition</p>
+
+
+<h3>Stem</h3>
+
+<p>Giant Contact SL Aero XXS:80mm, XS:80mm, S:90mm, M:100mm, L:110mm</p>
+
+
+<h3>Seatpost</h3>
+
+<p>Giant Vector, composite XXS:350mm, XS:350mm, S:350mm, M:350mm, L:350mm</p>
+
+
+<h3>Saddle</h3>
+
+<p>Liv Alacra SL CS</p>
+
+
+<h3>Pedals</h3>
+
+<p>Platform pedal [GCS,GTS] N/A [all other GSC]
+</p>
+
+
+<h3>Shifters</h3>
+
+<p>Shimano 105 ST-R7025</p>
+
+
+<h3>Front Derailleur</h3>
+
+<p>Shimano 105</p>
+
+
+<h3>Rear Derailleur</h3>
+
+<p>Shimano 105</p>
+
+
+<h3>Brakes</h3>
+
+<p>Shimano 105 hydraulic, Shimano rotors [F]160mm, [R]140mm</p>
+
+
+<h3>Brake Levers</h3>
+
+<p>Shimano 105 hydraulic</p>
+
+
+<h3>Cassette</h3>
+
+<p>Shimano 105, 11-speed, 11x30</p>
+
+
+<h3>Chain</h3>
+
+<p>KMC X11SL-1</p>
+
+
+<h3>Crankset</h3>
+
+<p>Shimano 105, 36/52 XXS:165mm, XS:165mm, S:170mm, M:170mm, L:172.5mm</p>
+
+
+<h3>Bottom Bracket</h3>
+
+<p>Shimano, press fit</p>
+
+
+<h3>Rims</h3>
+
+<p>Giant SLR-2 Disc WheelSystem [F]42mm, [R]65mm</p>
+
+
+<h3>Hubs</h3>
+
+<p>Giant SLR-2 Disc WheelSystem</p>
+
+
+<h3>Spokes</h3>
+
+<p>Giant SLR-2 Disc WheelSystem</p>
+
+
+<h3>Tires</h3>
+
+<p>Giant Gavia AC 1, 700x25c (26.5mm), folding, tubeless</p>
+
+
+<h3>Extras</h3>
+
+<p>RideSense Bluetooth, tubeless prepared, 30mm max tire size</p>
+
+
+<h3>Weight</h3>
+
+<p>~8.52kg
+
+<h3>Size</h3></p>
+
+<p>XXS</p>
+
+<h3>PRICE</h3>
+
+<p>₱155,000.00 </p>
+                </div>
+                <!-- Add more spec cards -->
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery-section">
+        <h2>Gallery</h2>
+        <div class="masonry-grid">
+            <div class="gallery-item">
+                <img src="1.jpg" alt="Bike side view">
+            </div>
+            <div class="gallery-item">
+                <img src="2.jpg" alt="Bike side view">
+            </div>
+            <div class="gallery-item">
+                <img src="3.jpg" alt="Bike side view">
+            </div>        
+            <div class="gallery-item">
+                <img src="4.jpg" alt="Bike side view">
+            </div>
+            <div class="gallery-item">
+                <img src="5.jpg" alt="Bike side view">
+            </div>
+            <div class="gallery-item">
+                <img src="6.jpg" alt="Bike side view">
+            </div>
+            <div class="gallery-item">
+                <img src="7.jpg" alt="Bike side view">
+            </div>
+            <div class="gallery-item">
+                <img src="8.jpg" alt="Bike side view">
+            </div>
+            <!-- Add more gallery items -->
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <textarea rows="5" placeholder="Message" required></textarea>
+            </div>
+            <button type="submit" class="cta-button">Send Message</button>
+        </form>
+    </section>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.25 });
+
+            // Observe all animate-able elements
+            document.querySelectorAll('.feature-card, .spec-card, .gallery-item').forEach(element => {
+                observer.observe(element);
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
